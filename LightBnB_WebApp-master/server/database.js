@@ -102,8 +102,6 @@ LIMIT '${limit}';`)
       console.log(err);
       return null;
     });
-
-  //  return getAllProperties(null, 2);
 }
 exports.getAllReservations = getAllReservations;
 
@@ -117,25 +115,69 @@ exports.getAllReservations = getAllReservations;
  */
 
 const getAllProperties = (options, limit = 10) => {
-  return pool
-    .query(`SELECT * FROM properties LIMIT $1`, [limit])
-    .then((result) => {
-      console.log(result.rows);
-      return result.rows;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+  const queryParams = [];
+
+  let queryString = `
+SELECT properties.*, avg(property_reviews.rating) as average_rating
+FROM properties
+JOIN property_reviews ON properties.id = property_id
+`;
+
+  if (options.city) {
+    queryParams.push(`%${options.city}%`);
+    queryString += `WHERE city LIKE $${queryParams.length} `;
+  }
+
+  if (options.owner_id) {
+    queryParams.push(parseInt(options.owner_id));
+    if (options.city) {
+      queryString += `AND owner_id = $${queryParams.length} `;
+    } else {
+      queryString += `WHERE owner_id = $${queryParams.length} `;
+    }
+  }
+
+  queryString += `GROUP BY properties.id`;
+  let havingAddOns = 0;
+
+  if (options.minimum_rating || options.minimum_price_per_night || options.maximum_price_per_night) {
+    queryString += ` HAVING `;
+  }
+
+  if (options.minimum_rating) {
+    queryParams.push(parseInt(options.minimum_rating));
+    queryString += `avg(property_reviews.rating) >= $${queryParams.length} `;
+    havingAddOns += 1;
+  }
+
+  if (options.minimum_price_per_night) {
+    queryParams.push(parseInt(options.minimum_price_per_night) * 100);
+    if (havingAddOns > 0) {
+      queryString += `AND `;
+    }
+    queryString += `properties.cost_per_night >= $${queryParams.length} `;
+  }
+
+  if (options.maximum_price_per_night) {
+    queryParams.push(parseInt(options.maximum_price_per_night) * 100);
+    if (havingAddOns > 0) {
+      queryString += `AND `;
+    }
+    queryString += `properties.cost_per_night <= $${queryParams.length} `;
+  }
+
+  queryParams.push(limit);
+  queryString += `
+ORDER BY cost_per_night
+LIMIT $${queryParams.length};
+`;
+
+  console.log(queryString, queryParams);
+
+  return pool.query(queryString, queryParams)
+    .then((res) => res.rows);
 };
 
-//What was originally provided
-// const getAllProperties = function(options, limit = 10) {
-//   const limitedProperties = {};
-//   for (let i = 1; i <= limit; i++) {
-//     limitedProperties[i] = properties[i];
-//   }
-//   return Promise.resolve(limitedProperties);
-// }
 exports.getAllProperties = getAllProperties;
 
 
