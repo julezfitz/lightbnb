@@ -110,7 +110,7 @@ LIMIT $2;`, queryParams)
       console.log(err);
       return null;
     });
-}
+};
 exports.getAllReservations = getAllReservations;
 
 /// Properties
@@ -192,7 +192,7 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 
-const addProperty = function (property) {
+const addProperty = function(property) {
   const queryParams = [];
   queryParams.push(property.owner_id, property.title, property.description, property.thumbnail_photo_url,
     property.cover_photo_url, property.cost_per_night, property.street, property.city, property.province, property.post_code,
@@ -210,3 +210,14 @@ const addProperty = function (property) {
     });
 };
 exports.addProperty = addProperty;
+
+const addReservation = function(reservation) {
+  // Adds a reservation from a specific user to the database
+  return pool.query(`
+    INSERT INTO reservations (start_date, end_date, property_id, guest_id)
+    VALUES ($1, $2, $3, $4) RETURNING *;
+  `, [reservation.start_date, reservation.end_date, reservation.property_id, reservation.guest_id])
+    .then(res => res.rows[0]);
+};
+
+exports.addReservation = addReservation;
