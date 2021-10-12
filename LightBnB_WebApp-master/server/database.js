@@ -126,7 +126,7 @@ const getAllProperties = (options, limit = 10) => {
   const queryParams = [];
 
   let queryString = `
-SELECT properties.*, avg(property_reviews.rating) as average_rating
+SELECT properties.*, avg(property_reviews.rating) as average_rating, count(property_reviews.rating) as review_count
 FROM properties
 JOIN property_reviews ON properties.id = property_id
 `;
@@ -270,12 +270,17 @@ const updateReservation = function (newReservationData, reservationId) {
 
 exports.updateReservation = updateReservation;
 
-//
 //  Deletes an existing reservation
-//
 const deleteReservation = function (reservationId) {
-
+  const queryParams = [reservationId];
+  const queryString = `DELETE FROM reservations WHERE id = $1`;
+  return pool.query(queryString, queryParams)
+    .then(() => console.log("Successfully deleted!"))
+    .catch(err => console.error(err));
 };
+
+exports.deleteReservation = deleteReservation;
+
 
 // Obtains an individual reservation
 const getIndividualReservation = function (reservationId) {
@@ -294,3 +299,21 @@ const getIndividualReservation = function (reservationId) {
     });
 };
 exports.getIndividualReservation = getIndividualReservation;
+
+//get reviews by property
+const getReviewsByProperty = function(propertyId) {
+ const queryString = `
+   SELECT property_reviews.id, property_reviews.rating AS review_rating, property_reviews.message AS review_text, 
+   users.name, properties.title AS property_title, reservations.start_date, reservations.end_date
+   FROM property_reviews
+   JOIN reservations ON reservations.id = property_reviews.reservation_id  
+   JOIN properties ON properties.id = property_reviews.property_id
+   JOIN users ON users.id = property_reviews.guest_id
+   WHERE properties.id = $1
+   ORDER BY reservations.start_date ASC;
+ `
+ const queryParams = [propertyId];
+ return pool.query(queryString, queryParams).then(res => res.rows);
+}
+
+exports.getReviewsByProperty = getReviewsByProperty;

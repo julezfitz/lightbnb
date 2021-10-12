@@ -67,7 +67,15 @@ function updateReservation(data) {
   })
 }
 
-const submitProperty = function(data) {
+const deleteReservation = function (data) {
+  const idNum = parseInt(data);
+  return $.ajax({
+    method: "DELETE",
+    url: `/api/reservations/${idNum}`,
+  });
+}
+
+const submitProperty = function (data) {
   return $.ajax({
     method: "POST",
     url: "/api/properties",
@@ -75,10 +83,17 @@ const submitProperty = function(data) {
   });
 }
 
-const submitReservation = function(data) {
+const submitReservation = function (data) {
   return $.ajax({
     method: "POST",
     url: "/api/reservations",
     data,
   })
+}
+
+const getReviewsByProperty = function(propertyId) {
+  const url = `api/reviews/${propertyId}`;
+  return $.ajax({
+    url,
+  });
 }

@@ -75,12 +75,26 @@ module.exports = function (router, database) {
 
   router.post('/reservations/:reservationId', (req, res) => {
     const reservationId = req.params.reservationId;
-    console.log(req.body);
     database.updateReservation({ ...req.body, reservation_id: reservationId })
       .then(reservation => {
         res.send(reservation);
       });
   });
+
+  // delete a reservation
+  router.delete('/reservations/:reservationId', (req, res) => {
+    const reservationId = req.params.reservationId;
+    database.deleteReservation(reservationId);
+  });
+
+  // get reviews by property
+  router.get('/reviews/:propertyId', (req, res) => {
+    const propertyId = req.params.propertyId
+    database.getReviewsByProperty(propertyId)
+      .then(reviews => {
+        res.send(reviews);
+      })
+  })
 
   return router;
 };

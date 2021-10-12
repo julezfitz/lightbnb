@@ -41,6 +41,11 @@ $(() => {
         $newReservationForm.appendTo($main);
         $(dataTag).appendTo("#datatag");
         break;
+      case 'showReviews':
+        getReviewsByProperty(data)
+        .then(reviews => propertyReviews.addReviews(reviews));
+        $propertyReviews.appendTo($main);
+        break;
       case 'updateReservation':
         // extend data tag with additional information
         dataTag = `
