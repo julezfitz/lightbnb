@@ -25,7 +25,7 @@ pool.connect()
  * @param {String} email The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
-const getUserWithEmail = function(email) {
+const getUserWithEmail = function (email) {
   const queryParams = [email];
   return pool.query(`SELECT id, name, email, password FROM users WHERE email = $1`, queryParams)
     .then(res => {
@@ -47,7 +47,7 @@ exports.getUserWithEmail = getUserWithEmail;
  * @param {string} id The id of the user.
  * @return {Promise<{}>} A promise to the user.
  */
-const getUserWithId = function(id) {
+const getUserWithId = function (id) {
   const queryParams = [id];
 
   return pool.query(`SELECT id, name, email, password FROM users WHERE id = $1`, queryParams)
@@ -91,7 +91,7 @@ exports.addUser = addUser;
  * @param {string} guest_id The id of the user.
  * @return {Promise<[{}]>} A promise to the reservations.
  */
-const getAllReservations = function (guest_id, limit = 10) {
+const getFulfilledReservations = function (guest_id, limit = 10) {
   const queryParams = [guest_id, limit];
 
   return pool.query(`SELECT reservations.*, properties.*, avg(rating) as average_rating
@@ -111,7 +111,7 @@ LIMIT $2;`, queryParams)
       return null;
     });
 };
-exports.getAllReservations = getAllReservations;
+exports.getFulfilledReservations = getFulfilledReservations;
 
 /// Properties
 
@@ -192,7 +192,7 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 
-const addProperty = function(property) {
+const addProperty = function (property) {
   const queryParams = [];
   queryParams.push(property.owner_id, property.title, property.description, property.thumbnail_photo_url,
     property.cover_photo_url, property.cost_per_night, property.street, property.city, property.province, property.post_code,
@@ -211,7 +211,7 @@ const addProperty = function(property) {
 };
 exports.addProperty = addProperty;
 
-const addReservation = function(reservation) {
+const addReservation = function (reservation) {
   // Adds a reservation from a specific user to the database
   return pool.query(`
     INSERT INTO reservations (start_date, end_date, property_id, guest_id)
@@ -221,3 +221,76 @@ const addReservation = function(reservation) {
 };
 
 exports.addReservation = addReservation;
+
+//
+//  Gets upcoming reservations
+//
+const getUpcomingReservations = function (guest_id, limit = 10) {
+  const queryParams = [guest_id, limit];
+
+  return pool.query(`
+  SELECT properties.*, reservations.*, avg(rating) as average_rating
+  FROM reservations
+  JOIN properties ON reservations.property_id = properties.id
+  JOIN property_reviews ON properties.id = property_reviews.property_id 
+  WHERE reservations.guest_id = $1
+  AND reservations.start_date > now()::date
+  GROUP BY properties.id, reservations.id
+  ORDER BY reservations.start_date
+  LIMIT $2;
+  `, queryParams)
+    .then(res => res.rows);
+};
+
+exports.getUpcomingReservations = getUpcomingReservations;
+
+//  Updates an existing reservation with new information
+const updateReservation = function (newReservationData, reservationId) {
+  let queryString = `UPDATE reservations SET `;
+  const queryParams = [];
+
+  if (newReservationData.start_date) {
+    queryParams.push(newReservationData.start_date);
+    queryString += `start_date = $1`;
+    if (newReservationData.end_date) {
+      queryParams.push(newReservationData.end_date);
+      queryString += `, end_date = $2`;
+    }
+  } else {
+    queryParams.push(newReservationData.end_date);
+    queryString += `end_date = $1`;
+  }
+  queryString += ` WHERE id = $${queryParams.length + 1} RETURNING *;`
+  queryParams.push(newReservationData.reservation_id);
+  console.log(queryString);
+  return pool.query(queryString, queryParams)
+    .then(res => res.rows[0])
+    .catch(err => console.error(err));
+};
+
+exports.updateReservation = updateReservation;
+
+//
+//  Deletes an existing reservation
+//
+const deleteReservation = function (reservationId) {
+
+};
+
+// Obtains an individual reservation
+const getIndividualReservation = function (reservationId) {
+  const queryParams = [reservationId];
+
+  return pool.query(`SELECT * FROM reservations WHERE reservations.id = $1`, queryParams)
+    .then(res => {
+      if (res.rows.length < 1) {
+        return null;
+      }
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.log(err);
+      return null;
+    });
+};
+exports.getIndividualReservation = getIndividualReservation;

@@ -41,38 +41,43 @@ $(() => {
   window.header.update = updateHeader;
 
   getMyDetails()
-    .then(function( json ) {
-    updateHeader(json.user);
-  });
+    .then(function (json) {
+      updateHeader(json.user);
+    });
 
-  $("header").on("click", '.my_reservations_button', function() {
+  $("header").on("click", '.my_reservations_button', function () {
     propertyListings.clearListings();
-    getAllReservations()
-      .then(function(json) {
-        propertyListings.addProperties(json.reservations, true);
+    getFulfilledReservations()
+      .then(function (json) {
+        propertyListings.addProperties(json.reservations, { upcoming: false });
+        getUpcomingReservations()
+          .then(json => {
+            propertyListings.addProperties(json.reservations, { upcoming: true });
+          });
         views_manager.show('listings');
       })
       .catch(error => console.error(error));
   });
-  $("header").on("click", '.my_listing_button', function() {
+
+  $("header").on("click", '.my_listing_button', function () {
     propertyListings.clearListings();
     getAllListings(`owner_id=${currentUser.id}`)
-      .then(function(json) {
+      .then(function (json) {
         propertyListings.addProperties(json.properties);
         views_manager.show('listings');
-    });
+      });
   });
 
-  $("header").on("click", '.home', function() {
+  $("header").on("click", '.home', function () {
     propertyListings.clearListings();
     getAllListings()
-      .then(function(json) {
+      .then(function (json) {
         propertyListings.addProperties(json.properties);
         views_manager.show('listings');
-    });
+      });
   });
 
-  $('header').on('click', '.search_button', function() {
+  $('header').on('click', '.search_button', function () {
     views_manager.show('searchProperty');
   });
 
@@ -88,7 +93,7 @@ $(() => {
     });
   });
 
-  $('header').on('click', '.create_listing_button', function() {
+  $('header').on('click', '.create_listing_button', function () {
     views_manager.show('newProperty');
   });
 
