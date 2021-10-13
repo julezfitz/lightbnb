@@ -53,6 +53,7 @@ function getUpcomingReservations() {
 }
 
 function getIndividualReservation(reservationId) {
+  console.log(`network ${reservationId}`);
   let url = `/api/reservations/${reservationId}`
   return $.ajax({
     url,
@@ -96,4 +97,12 @@ const getReviewsByProperty = function(propertyId) {
   return $.ajax({
     url,
   });
+}
+
+const submitReview = function(data) {
+  return $.ajax({
+    method: "POST",
+    url: `api/reviews/${data.reservationId}`,
+    data,
+  })
 }

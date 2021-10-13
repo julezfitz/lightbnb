@@ -18,11 +18,11 @@ $(() => {
   window.propertyListings.clearListings = clearListings;
 
   function addProperties(properties, isReservation = false) {
-    // if it's a reservation, don't clear listings
+    // if it's a reservation, we don't want to clear the listings a second time in the addProperties function call
     if (!isReservation) {
       clearListings();
     }
-    // check user login
+    // check for user login
     getMyDetails()
       .then()
     for (const propertyId in properties) {
@@ -30,21 +30,33 @@ $(() => {
       const listing = propertyListing.createListing(property, isReservation);
       addListing(listing);
     }
-
-    console.log(jQuery('.update-button'));
-
     if (isReservation) {
-      $('.update-button').on('click', function() {
+      $('.update-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
         getIndividualReservation(idData).then(data => {
-          views_manager.show("updateReservation", data);       
+          views_manager.show("updateReservation", data);
         });
       })
-      $('.delete-button').on('click', function() {
+      $('.delete-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
-        console.log(`delete ${idData}`);
-        deleteReservation(idData).then(data => console.log('yay'));
-      });
+        deleteReservation(idData)
+          .then(() => console.log('Success!'))
+          .catch(err => console.error(err));
+      })
+      $('.add-review-button').on('click', function () {
+        const idData = $(this).attr('id').substring(11);
+        console.log(`clicked review me for ${idData}`);
+        views_manager.show("newReview", idData);
+      })
+    } else {
+      $('.reserve-button').on('click', function () {
+        const idData = $(this).attr('id').substring(17);
+        views_manager.show('newReservation', idData);
+      })
+      $('.review_details').on('click', function () {
+        const idData = $(this).attr('id').substring(15);
+        views_manager.show('showReviews', idData);
+      })
     }
   }
 

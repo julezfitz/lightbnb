@@ -65,5 +65,5 @@ CREATE TABLE rates (
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   cost_per_night INTEGER  NOT NULL,
-  property_id INTEGER REFERENCES properties(id) ON DELETE CASCADE,
+  property_id INTEGER REFERENCES properties(id) ON DELETE CASCADE
 );
