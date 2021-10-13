@@ -12,6 +12,7 @@ $(() => {
     $signUpForm.detach();
     $newReservationForm.detach();
     $updateReservationForm.detach();
+    $propertyReviews.detach();
 
     //if single reservation details from an update exists, detach it
     if ($("#reservation-details")) {
