@@ -5,6 +5,7 @@ module.exports = function (router, database) {
       .then(properties => res.send({ properties }))
       .catch(e => {
         console.error(e);
+        console.log('photo didnt load?');
         res.send(e);
       });
   });

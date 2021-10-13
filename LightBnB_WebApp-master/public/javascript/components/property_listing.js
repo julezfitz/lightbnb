@@ -5,7 +5,9 @@ $(() => {
     return `
     <article class="property-listing">
         <section class="property-listing__preview-image">
-          <img src="${property.thumbnail_photo_url}" alt="house">
+          <img src="${property.thumbnail_photo_url}"
+          onerror="this.onerror=null; this.src='florian-schmidinger-b_79nOqf95I-unsplash.jpg'"
+       alt="house">
         </section>
         <section class="property-listing__details">
           <h3 class="property-listing__title">${property.title}</h3>

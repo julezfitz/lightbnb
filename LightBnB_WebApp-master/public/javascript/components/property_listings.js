@@ -28,6 +28,7 @@ $(() => {
     for (const propertyId in properties) {
       const property = properties[propertyId];
       const listing = propertyListing.createListing(property, isReservation);
+      console.log(property);
       addListing(listing);
     }
     if (isReservation) {

@@ -32,6 +32,7 @@
 .property-listing__title {
   font-size: 1rem;
   text-transform: uppercase;
+  color: white;
   font-weight: 200;
 }
 .property-listing__preview-image {
@@ -139,6 +140,7 @@ h3 {
 
 body {
   background-color: #cdd0d6;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /*# sourceMappingURL=main.css.map */
