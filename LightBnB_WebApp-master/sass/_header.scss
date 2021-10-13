@@ -1,5 +1,13 @@
 .page-header {
+  background-color: rgb(61, 84, 107);
+  height: 4em;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.5); 
+
   &__user-links {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
     ul {
       list-style: none;
       display: flex;
