@@ -28,20 +28,33 @@ $(() => {
     for (const propertyId in properties) {
       const property = properties[propertyId];
       const listing = propertyListing.createListing(property, isReservation);
-      console.log(property);
       addListing(listing);
     }
     if (isReservation) {
       $('.update-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
-        getIndividualReservation(idData).then(data => {
+        getIndividualReservation(idData)
+        .then(data => {
           views_manager.show("updateReservation", data);
         });
       })
       $('.delete-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
         deleteReservation(idData)
-          .then(() => console.log('Success!'))
+          .then(() => {
+            console.log('deleted');
+            propertyListings.clearListings();
+            return getFulfilledReservations()
+            // location.reload(true);
+          })
+          .then((json) => {
+            propertyListings.addProperties(json.reservations, { upcoming: false });
+            return getUpcomingReservations()
+          })
+          .then(json => {
+            return propertyListings.addProperties(json.reservations, { upcoming: true });
+          })
+          .then(() => views_manager.show('listings'))
           .catch(err => console.error(err));
       })
       $('.add-review-button').on('click', function () {

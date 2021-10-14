@@ -31,7 +31,6 @@ $mainFont: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 0 11px rgba(33,33,33,.7); 
 }
 
-
   &__title {
     font-size: 1.0rem;
     text-transform: uppercase;
@@ -60,8 +59,9 @@ $mainFont: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   .review_details:hover {
     color: blue;
   }
+  
 
-  .update-button, .add-review-button, .deletebutton, .reserve-button {
+  .update-button, .add-review-button, .delete-button, .reserve-button {
     background-color: #233c64;  
     color: rgb(238, 174, 91);
     padding: 3px 7px;

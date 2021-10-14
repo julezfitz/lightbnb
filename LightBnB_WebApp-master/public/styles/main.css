@@ -56,7 +56,7 @@
 .property-listing .review_details:hover {
   color: blue;
 }
-.property-listing .update-button, .property-listing .add-review-button, .property-listing .deletebutton, .property-listing .reserve-button {
+.property-listing .update-button, .property-listing .add-review-button, .property-listing .delete-button, .property-listing .reserve-button {
   background-color: #233c64;
   color: #eeae5b;
   padding: 3px 7px;
