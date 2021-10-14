@@ -48,13 +48,13 @@ $(() => {
         break;
       case 'showReviews':
         getReviewsByProperty(data)
-        .then(reviews => propertyReviews.addReviews(reviews));
+          .then(reviews => propertyReviews.addReviews(reviews));
         $propertyReviews.appendTo($main);
         break;
       case 'newReview':
         dataTag = `<h4>${data}</h4>`;
         $newReviewForm.appendTo($main);
-        $("#datatag").empty(); 
+        $("#datatag").empty();
         $(dataTag).appendTo("#datatag");
         break;
       case 'updateReservation':
@@ -77,8 +77,11 @@ $(() => {
         $(reservationDetails).appendTo($main);
         $updateReservationForm.appendTo($main);
         console.log(`new datatag appended`);
-        $("#datatag").empty(); //added this to drop previous data tags
+        //drops previous data tags
+        $("#datatag").empty(); 
         $(dataTag).appendTo("#datatag");
+        //drops previous error messages
+        $('#error-message').empty();
         $(errorMessage).appendTo('#error-message');
         break;
       case 'error': {
