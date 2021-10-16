@@ -41,3 +41,46 @@
   * `apiRoutes.js` and `userRoutes.js` are responsible for any HTTP requests to `/users/something` or `/api/something`. 
   * `json` is a directory that contains a bunch of dummy data in `.json` files.
   * `database.js` is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from `.json` files.
+
+## Project Views
+
+### Sign Up View
+!["Sign Up View"]()
+
+### Login View
+!["Login View"]()
+
+### Search Properties Form View
+!["Search Properties Form View"]()
+
+### Property Listings View
+!["Property Listings View"]()
+
+### My Reservations View
+!["My Reservations View"]()
+
+### Review View
+!["Review View"]()
+
+
+  This project was created to fulfill my Lighthouse Labs program requirements, and included practicing HTML, CSS, Sass, JS, jQuery and AJAX front-end skills, and Node, Express and PostgreSQL back-end skills.
+
+## Getting Started
+
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the `npm install` command.
+3. Start the web server using the `npm run local` command. The app will be served at <http://localhost:3000/>.
+4. Go to <http://localhost:3000/> in your browser.
+
+## Dependencies
+
+- Express
+- Body-parser
+- Chance
+- md5
+- @fortawesome/fontawesome-svg-core
+- Node 5.10.x or above
+- bcrypt 3.0.6 or above
+- cookie-session 1.3.3 or above
+- nodemon 1.19.1 or above
+- pg 8.7.1 or above
