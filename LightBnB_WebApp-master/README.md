@@ -45,22 +45,22 @@
 ## Project Views
 
 ### Sign Up View
-!["Sign Up View"]()
+!["Sign Up View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Sign-up-view.png)
 
 ### Login View
-!["Login View"]()
+!["Login View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Login-view.png)
 
 ### Search Properties Form View
-!["Search Properties Form View"]()
+!["Search Properties Form View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Search-form-view.png)
 
 ### Property Listings View
-!["Property Listings View"]()
+!["Property Listings View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Listings-search-view.png)
 
 ### My Reservations View
-!["My Reservations View"]()
+!["My Reservations View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/My-reservations-view.png)
 
 ### Review View
-!["Review View"]()
+!["Review View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Review-view.png)
 
 
   This project was created to fulfill my Lighthouse Labs program requirements, and included practicing HTML, CSS, Sass, JS, jQuery and AJAX front-end skills, and Node, Express and PostgreSQL back-end skills.
