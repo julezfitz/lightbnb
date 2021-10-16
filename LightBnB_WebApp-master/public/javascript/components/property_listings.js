@@ -18,7 +18,7 @@ $(() => {
   window.propertyListings.clearListings = clearListings;
 
   function addProperties(properties, isReservation = false) {
-    // if it's a reservation, we don't want to clear the listings a second time in the addProperties function call
+    // if reservation, don't clear listings a second time in the addProperties function call
     if (!isReservation) {
       clearListings();
     }
@@ -40,10 +40,10 @@ $(() => {
       })
       $('.delete-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
+        //remove from my reservations display
         $(this).closest('article').remove();
         deleteReservation(idData)
           .then(() => {
-            console.log('deleted');
             propertyListings.clearListings();
             return getFulfilledReservations()
             // location.reload(true);
@@ -60,7 +60,6 @@ $(() => {
       })
       $('.add-review-button').on('click', function () {
         const idData = $(this).attr('id').substring(11);
-        console.log(`clicked review me for ${idData}`);
         views_manager.show("newReview", idData);
       })
     } else {

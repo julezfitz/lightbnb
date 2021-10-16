@@ -5,7 +5,6 @@ module.exports = function (router, database) {
       .then(properties => res.send({ properties }))
       .catch(e => {
         console.error(e);
-        console.log('photo didnt load?');
         res.send(e);
       });
   });
@@ -100,7 +99,6 @@ module.exports = function (router, database) {
   //post a new review
   router.post('/reviews/:reservationId', (req, res) => {
     const reservationId = req.params.reservationId;
-    console.log({ ...req.body });
     database.addReview({ ...req.body })
       .then(review => {
         res.send(review);

@@ -164,8 +164,6 @@ $(() => {
     const formArray = $(this).serializeArray();
     const startDate = `${formArray[2].value}-${formArray[1].value}-${formArray[0].value}`
     const endDate = `${formArray[5].value}-${formArray[4].value}-${formArray[3].value}`
-    console.log(`start-date ${startDate}`);
-    console.log(`end date ${endDate}`);
     const propertyId = $(this).find("#datatag h4").text();
     const dataObj = { start_date: startDate, end_date: endDate, property_id: propertyId }
     submitReservation(dataObj)

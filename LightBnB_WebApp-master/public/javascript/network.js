@@ -1,5 +1,4 @@
 function getMyDetails() {
-  console.log("getMyDetails");
   return $.ajax({
     url: "/users/me",
   });
@@ -53,7 +52,6 @@ function getUpcomingReservations() {
 }
 
 function getIndividualReservation(reservationId) {
-  console.log(`network ${reservationId}`);
   let url = `/api/reservations/${reservationId}`
   return $.ajax({
     url,

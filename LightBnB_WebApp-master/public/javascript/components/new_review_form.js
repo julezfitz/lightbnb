@@ -27,13 +27,9 @@ $(() => {
     // clear our review fields
     $('#new-review-rating').val("");
     $("#new-review-body").val("");
-    console.log('a new review was submitted using the form');
     if (reviewRating && reservationId) {
-      console.log(getIndividualReservation(reservationId));
       getIndividualReservation(reservationId)
       .then(data => {
-        console.log('this is the data');
-        console.log(data);
         const dataObj = {...data, reservationId: data.id, message: reviewBody, rating: reviewRating};
         submitReview(dataObj)
         .then(result => {

@@ -169,16 +169,13 @@ $(() => {
     event.preventDefault();
     views_manager.show('none');
     const formArray = $(this).serializeArray();
-    console.log(formArray);
     // check for presence of variables, if they're there, assign them
     if (formArray[0].value && formArray[1].value && formArray[2].value) {
       startDate = `${formArray[2].value}-${formArray[1].value}-${formArray[0].value}`;
-      console.log(startDate);
     }
 
     if (formArray[3].value && formArray[4].value && formArray[5].value) {
       endDate = `${formArray[5].value}-${formArray[4].value}-${formArray[3].value}`;
-      console.log(endDate);
     }
 
     if (!startDate && !endDate) {
@@ -217,11 +214,9 @@ $(() => {
     const reservationId = $(this).find("#datatag-reservation-id").text();
     const dataObj = { start_date: startDate, end_date: endDate, reservation_id: reservationId };
 
-    console.log(dataObj.start_date);
     if ((startDate || endDate) && !errorMessage) {
       updateReservation(dataObj)
         .then(data => {
-          console.log(`updated reservation: ${data}`);
           views_manager.show('none');
           propertyListings.clearListings();
           getFulfilledReservations()
@@ -242,7 +237,6 @@ $(() => {
     } else {
       dataObj.error_message = errorMessage;
       views_manager.show('updateReservation', dataObj);
-      console.log(errorMessage);
     }
   });
 });

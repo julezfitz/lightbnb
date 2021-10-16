@@ -32,11 +32,9 @@ const getUserWithEmail = function (email) {
       if (res.rows.length < 1) {
         return null;
       }
-      console.log(res.rows[0]);
       return res.rows[0];
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -58,7 +56,6 @@ const getUserWithId = function (id) {
       return res.rows[0];
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -78,7 +75,6 @@ const addUser = function (user) {
       return res.rows[0];
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -104,11 +100,9 @@ GROUP BY properties.id, reservations.id
 ORDER BY reservations.start_date
 LIMIT $2;`, queryParams)
     .then(res => {
-      console.log(res.rows);
       return res.rows;
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -146,33 +140,30 @@ JOIN property_reviews ON properties.id = property_id
     }
   }
 
-  queryString += `GROUP BY properties.id`;
-  let havingAddOns = 0;
-
-  if (options.minimum_rating || options.minimum_price_per_night || options.maximum_price_per_night) {
-    queryString += ` HAVING `;
-  }
-
-  if (options.minimum_rating) {
-    queryParams.push(parseInt(options.minimum_rating));
-    queryString += `avg(property_reviews.rating) >= $${queryParams.length} `;
-    havingAddOns += 1;
-  }
-
   if (options.minimum_price_per_night) {
     queryParams.push(parseInt(options.minimum_price_per_night) * 100);
-    if (havingAddOns > 0) {
-      queryString += `AND `;
+    if (options.city || options.owner_id) {
+      queryString += `AND cost_per_night >= $${queryParams.length} `;
+    } else {
+      queryString += `WHERE cost_per_night >= $${queryParams.length} `;
     }
-    queryString += `properties.cost_per_night >= $${queryParams.length} `;
   }
 
   if (options.maximum_price_per_night) {
     queryParams.push(parseInt(options.maximum_price_per_night) * 100);
-    if (havingAddOns > 0) {
-      queryString += `AND `;
+    if (options.city || options.owner_id || options.minimum_price_per_night) {
+      queryString += `AND cost_per_night <= $${queryParams.length} `;
+    } else {
+      queryString += `WHERE cost_per_night <= $${queryParams.length} `;
     }
-    queryString += `properties.cost_per_night <= $${queryParams.length} `;
+  }
+
+  queryString += `GROUP BY properties.id`;
+
+  if (options.minimum_rating) {
+    queryString += ` HAVING `;
+    queryParams.push(parseInt(options.minimum_rating));
+    queryString += `avg(property_reviews.rating) >= $${queryParams.length} `;
   }
 
   queryParams.push(limit);
@@ -206,7 +197,6 @@ const addProperty = function (property) {
       return res.rows[0];
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -263,8 +253,6 @@ const updateReservation = function (newReservationData, reservationId) {
   }
   queryString += ` WHERE id = $${queryParams.length + 1} RETURNING *;`
   queryParams.push(newReservationData.reservation_id);
-  console.log(queryString);
-  console.log(`query params ${queryParams}`);
   return pool.query(queryString, queryParams)
     .then(res => res.rows[0])
     .catch(err => console.error(err));
@@ -277,9 +265,6 @@ const deleteReservation = function (reservationId) {
   const queryParams = [reservationId];
   const queryString = `DELETE FROM reservations WHERE id = $1`;
   return pool.query(queryString, queryParams)
-    .then(() => {
-      console.log("Successfully deleted!");
-    })
     .catch(err => console.error(err));
 };
 
@@ -289,18 +274,15 @@ exports.deleteReservation = deleteReservation;
 // Obtains an individual reservation
 const getIndividualReservation = function (reservationId) {
   const queryParams = [reservationId];
-  console.log(reservationId);
 
   return pool.query(`SELECT * FROM reservations WHERE reservations.id = $1`, queryParams)
     .then(res => {
-      console.log(res.rows);
       if (res.rows.length < 1) {
         return null;
       }
       return res.rows[0];
     })
     .catch(err => {
-      console.log(err);
       return null;
     });
 };
@@ -323,7 +305,6 @@ const getReviewsByProperty = function (propertyId) {
 }
 
 const addReview = function (review) {
-  console.log('called add review function');
   const queryString = `
     INSERT INTO property_reviews (guest_id, property_id, reservation_id, rating, message) 
     VALUES ($1, $2, $3, $4, $5)
@@ -332,7 +313,6 @@ const addReview = function (review) {
   const queryParams = [review.guest_id, review.property_id, review.reservationId, parseInt(review.rating), review.message];
   return pool.query(queryString, queryParams).then(res => res.rows)
     .catch(err => {
-      console.log(err);
       return null;
     });
 }
