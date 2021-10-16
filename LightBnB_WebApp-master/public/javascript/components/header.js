@@ -12,7 +12,7 @@ $(() => {
       userLinks = `
       <nav id="page-header__user-links" class="page-header__user-links">
         <ul>
-          <li class="home">🏠</li>
+          <li class="home"><i class="fas fa-home"></i></li>
           <li class="search_button">Search</li>
           <li class="login_button">Log In</li>
           <li class="sign-up_button">Sign Up</li>
@@ -23,7 +23,7 @@ $(() => {
       userLinks = `
       <nav id="page-header__user-links" class="page-header__user-links">
         <ul>
-          <li class="home">🏠</li>
+          <li class="home"><i class="fas fa-home"></i></li>
           <li class="search_button">Search</li>
           <li>${user.name}</li>
           <li class="create_listing_button">Create Listing</li>

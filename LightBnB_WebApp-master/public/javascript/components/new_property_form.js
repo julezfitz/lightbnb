@@ -48,8 +48,6 @@ $(() => {
         <input placeholder="Cover Image" type="text" name="cover_photo_url" id="new-property-form__cover">
       </div>
 
-      <hr>
-
       <div class="new-property-form__field-wrapper">
           <label for="new-property-form__street">Street</label>
           <input placeholder="Street" type="text" name="street" id="new-property-form__street" />
@@ -81,7 +79,7 @@ $(() => {
 
         <div class="new-property-form__field-wrapper">
             <button>Create</button>
-            <a id="property-form__cancel" href="#">Cancel</a>
+            <a class="cancel_button" id="property-form__cancel" href="#">Cancel</a>
         </div>
         
     </form>

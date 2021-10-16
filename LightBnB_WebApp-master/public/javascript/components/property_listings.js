@@ -40,6 +40,7 @@ $(() => {
       })
       $('.delete-button').on('click', function () {
         const idData = $(this).attr('id').substring(16);
+        $(this).closest('article').remove();
         deleteReservation(idData)
           .then(() => {
             console.log('deleted');

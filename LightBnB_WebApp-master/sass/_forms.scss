@@ -1,9 +1,13 @@
-.search-property-form, .login-form, .new-property-form, .new-reservation-form, .update-reservation-form, .sign-up-form {
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin: auto;
+.new-review, .search-property-form, .login-form, .new-property-form, .new-reservation-form, .update-reservation-form, .sign-up-form {
+  
+  font-family: 'Open Sans Condensed', arial, sans;
+	width: 500px;
+	padding: 30px;
+	background: #f0f5f4;
+	margin: 50px auto;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.24);
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.24);
+	-webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.24);
 
   &__field-wrapper {
     width: 100%;
@@ -14,8 +18,63 @@
     display: none;
   }
 
-  textarea, select, input, label {
+  .cancel_button{
+    -moz-box-shadow: inset 0px 1px 0px 0px #f04d24;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f04d24;
+    box-shadow: inset 0px 1px 0px 0px #f04d24;
+    background-color: #f3552d;
+    border: 1px solid #eb451c;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 15px;
+    padding: 8px 18px;
+    margin-left: 1em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  textarea{
+    resize:none;
+    overflow: hidden;
+  }
+
+  button {
+	-moz-box-shadow: inset 0px 1px 0px 0px #d6b445;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #d6b445;
+	box-shadow: inset 0px 1px 0px 0px #d6b445;
+	background-color: #f3ae2d;
+	border: 1px solid #d69825;
+	display: inline-block;
+	cursor: pointer;
+	color: #FFFFFF;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 15px;
+	padding: 8px 18px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+input[type="text"], input[type="date"], input[type="datetime"], input[type="email"], input[type="number"],
+input[type="search"], input[type="time"], input[type="url"], input[type="password"], textarea, select {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 10px;
+	font: 15px Arial, Helvetica, sans-serif;
+  height: 45px;
+}
+  label {
     margin: 5px 5px;
     width: 100%;
   }
 }
+

@@ -21,7 +21,7 @@ $(() => {
 
       <div class="search-property-form__field-wrapper">
           <button>Search</button>
-          <a id="search-property-form__cancel" href="#">Cancel</a>
+          <a class="cancel_button" id="search-property-form__cancel" href="#">Cancel</a>
       </div>
     </form>
   `)
