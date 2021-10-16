@@ -1,5 +1,9 @@
 # LightBnB
 
+Welcome to LightBnB, the place to be for all of your BnB related needs. Search listings and reviews publicly, or create a personal account to search listings, make, update and delete reservations and review places you've stayed. If you are a BnB owner, we have you covered - Create your own listings and keep them all organized in a single place.  
+
+This project was created to fulfill my Lighthouse Labs program requirements, and included practicing HTML, CSS, Sass, JS, jQuery and AJAX front-end skills, and Node, Express and PostgreSQL back-end skills.
+
 ## Project Structure
 
 ```
@@ -62,8 +66,12 @@
 ### Review View
 !["Review View"](https://github.com/julezfitz/lightbnb/blob/main/LightBnB_WebApp-master/docs/Review-view.png)
 
-
-  This project was created to fulfill my Lighthouse Labs program requirements, and included practicing HTML, CSS, Sass, JS, jQuery and AJAX front-end skills, and Node, Express and PostgreSQL back-end skills.
+## Future Development
+Future planned developments and known bugs include the following:
+1. Create new listing currently updates the database adding the new listing to the properties table, but does not display the new listing in the user's "My Listings". This will be added.
+2. There is no back button while viewing a properties reviews. This will be added
+3. Navigation does not indicate the current page the user is on, which makes filling out forms a little confusing at times. Sass and CSS will be used to improve the navigation experience.
+4. Tables exist in the datatbase for guest reviews and to assign special property rates, however the web app doesn't currently support this functionality. This will be added. 
 
 ## Getting Started
 
