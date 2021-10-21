@@ -44,6 +44,7 @@ $(() => {
       case 'newReservation':
         dataTag = `<h4>${data}</h4>`;
         $newReservationForm.appendTo($main);
+        $("#datatag").empty();
         $(dataTag).appendTo("#datatag");
         break;
       case 'showReviews':
